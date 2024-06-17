@@ -60,7 +60,6 @@ This service pulls in all the dependencies you need for an application and does 
 . Click *Dependencies* and select *Spring Web*.
 . Click *Generate*.
 . Download the resulting ZIP file, which is an archive of a web application that is configured with your choices.
-
 NOTE: If your IDE has the Spring Initializr integration, you can complete this process from your IDE.
 
 NOTE: You can also fork the project from Github and open it in your IDE or other editor.
