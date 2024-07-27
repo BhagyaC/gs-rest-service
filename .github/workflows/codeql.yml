@@ -24,11 +24,16 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: java
+
       - name: Build Initial with Maven
         working-directory: ./initial
         run: ./mvnw --batch-mode clean package
 
-      - name: Ensure Gradlew Permissions
+      - name: Ensure Gradlew Permissions for Initial
         run: chmod +x ./initial/gradlew
 
       - name: Build Initial with Gradle
@@ -39,17 +44,15 @@ jobs:
         working-directory: ./complete
         run: ./mvnw --batch-mode clean package
 
-      - name: Ensure Gradlew Permissions
+      - name: Ensure Gradlew Permissions for Complete
         run: chmod +x ./complete/gradlew
 
       - name: Build Complete with Gradle
         working-directory: ./complete
         run: ./gradlew clean build
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: java
+      - name: Finalize CodeQL Database
+        run: /opt/hostedtoolcache/CodeQL/2.18.1/x64/codeql/codeql database finalize --finalize-dataset --threads=4 --ram=14567 /home/runner/work/_temp/codeql_databases/java
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
