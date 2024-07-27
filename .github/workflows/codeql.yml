@@ -29,6 +29,9 @@ jobs:
         with:
           languages: java
 
+      - name: List contents of ./initial
+        run: ls -la ./initial
+
       - name: Build Initial with Maven
         working-directory: ./initial
         run: ./mvnw --batch-mode clean package
@@ -36,9 +39,15 @@ jobs:
       - name: Ensure Gradlew Permissions for Initial
         run: chmod +x ./initial/gradlew
 
+      - name: List contents of ./initial
+        run: ls -la ./initial
+
       - name: Build Initial with Gradle
         working-directory: ./initial
         run: ./gradlew clean build
+
+      - name: List contents of ./complete
+        run: ls -la ./complete
 
       - name: Build Complete with Maven
         working-directory: ./complete
@@ -46,6 +55,9 @@ jobs:
 
       - name: Ensure Gradlew Permissions for Complete
         run: chmod +x ./complete/gradlew
+
+      - name: List contents of ./complete
+        run: ls -la ./complete
 
       - name: Build Complete with Gradle
         working-directory: ./complete
