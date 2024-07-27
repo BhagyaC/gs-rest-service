@@ -1,4 +1,4 @@
-name: CodeQL Analysis
+name: CI Build and CodeQL Analysis
 
 on:
   push:
@@ -9,18 +9,13 @@ on:
       - main
 
 jobs:
-  analyze:
-    name: Analyze CodeQL
+  build_and_analyze:
+    name: Build and Analyze
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: java
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -33,17 +28,28 @@ jobs:
         working-directory: ./initial
         run: ./mvnw --batch-mode clean package
 
+      - name: Ensure Gradlew Permissions
+        run: chmod +x ./initial/gradlew
+
       - name: Build Initial with Gradle
         working-directory: ./initial
-        run: ./gradlew build
+        run: ./gradlew clean build
 
       - name: Build Complete with Maven
         working-directory: ./complete
         run: ./mvnw --batch-mode clean package
 
+      - name: Ensure Gradlew Permissions
+        run: chmod +x ./complete/gradlew
+
       - name: Build Complete with Gradle
         working-directory: ./complete
-        run: ./gradlew build
+        run: ./gradlew clean build
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: java
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
