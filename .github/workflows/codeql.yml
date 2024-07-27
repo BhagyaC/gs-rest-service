@@ -29,6 +29,9 @@ jobs:
         with:
           languages: java
 
+      - name: List root directory contents
+        run: ls -la
+
       - name: List contents of ./initial
         run: ls -la ./initial
 
@@ -39,7 +42,7 @@ jobs:
       - name: Ensure Gradlew Permissions for Initial
         run: chmod +x ./initial/gradlew
 
-      - name: List contents of ./initial
+      - name: List contents of ./initial after setting permissions
         run: ls -la ./initial
 
       - name: Build Initial with Gradle
@@ -56,7 +59,7 @@ jobs:
       - name: Ensure Gradlew Permissions for Complete
         run: chmod +x ./complete/gradlew
 
-      - name: List contents of ./complete
+      - name: List contents of ./complete after setting permissions
         run: ls -la ./complete
 
       - name: Build Complete with Gradle
